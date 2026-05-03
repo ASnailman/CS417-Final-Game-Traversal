@@ -85,7 +85,7 @@ public class GameStateManager : MonoBehaviour
                 var leverState = GetLeverState(leverDoorBehavior.leverID);
                 if (leverState != null)
                 {
-                    Debug.Log("Checking door " + door.name + " with leverID " + leverDoorBehavior.leverID + " (state " + leverState.state + ") against required state " + leverDoorBehavior.requiredLeverState);
+                    //Debug.Log("Checking door " + door.name + " with leverID " + leverDoorBehavior.leverID + " (state " + leverState.state + ") against required state " + leverDoorBehavior.requiredLeverState);
                     if (leverState.state != leverDoorBehavior.requiredLeverState)
                     {
                         // Activate the door (e.g., open it)
