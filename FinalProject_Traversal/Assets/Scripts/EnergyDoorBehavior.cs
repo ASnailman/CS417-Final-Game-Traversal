@@ -9,6 +9,8 @@ public class EnergyDoorBehavior : MonoBehaviour
     private int filledSockets = 0;
     public GameObject InnerDoor; // reference to the inner door object that will be opened when all sockets are filled
     public GameObject SocketParent;
+
+    public string RequiredKeyType = "EnergyKey"; // the tag that identifies the type of key required to fill the sockets
     private bool DoorOpen = false;
     void Start()
     {
@@ -50,7 +52,7 @@ public class EnergyDoorBehavior : MonoBehaviour
             return; // if door is already open, no need to check sockets
         // Check if all sockets are filled with energy keys.
         bool allSocketsFilled = filledSockets >= SocketCount;
-        Debug.Log("EnergyDoorBehavior: Filled sockets " + filledSockets + "/" + SocketCount + " for door " + gameObject.name);
+        //Debug.Log("EnergyDoorBehavior: Filled sockets " + filledSockets + "/" + SocketCount + " for door " + gameObject.name);
         // If all sockets are filled, open the door
         if (allSocketsFilled)
         {
@@ -83,7 +85,7 @@ public class EnergyDoorBehavior : MonoBehaviour
                     continue;
 
                 var selectedObject = selectedInteractable.transform != null ? selectedInteractable.transform.gameObject : null;
-                if (selectedObject == null || !selectedObject.CompareTag("EnergyKey"))
+                if (selectedObject == null || !selectedObject.CompareTag(RequiredKeyType))
                     continue;
 
                 Destroy(selectedObject);
@@ -92,17 +94,17 @@ public class EnergyDoorBehavior : MonoBehaviour
     }
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("EnergyKey"))
+        if (other.gameObject.CompareTag(RequiredKeyType))
         {
-            Debug.Log("EnergyDoorBehavior: Energy key " + other.gameObject.name + " entered socket parent " + SocketParent.name);
+            Debug.Log("EnergyDoorBehavior: " + RequiredKeyType + " " + other.gameObject.name + " entered socket parent " + SocketParent.name);
             filledSockets++;
         }
     }
     void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("EnergyKey"))
+        if (other.gameObject.CompareTag(RequiredKeyType))
         {
-            Debug.Log("EnergyDoorBehavior: Energy key " + other.gameObject.name + " exited socket parent " + SocketParent.name);
+            Debug.Log("EnergyDoorBehavior: " + RequiredKeyType + " " + other.gameObject.name + " exited socket parent " + SocketParent.name);
             filledSockets--;
         }
     }

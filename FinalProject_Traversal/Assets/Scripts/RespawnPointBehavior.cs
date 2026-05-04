@@ -125,6 +125,7 @@ public class RespawnPointBehavior : MonoBehaviour
                     lblID.text = respawnPointID.ToString();
                     lblID.color = Color.black;
                 }
+                GameStateManager.Instance.setCurrentRespawnPoint(respawnPointID);
             }
         }
         else

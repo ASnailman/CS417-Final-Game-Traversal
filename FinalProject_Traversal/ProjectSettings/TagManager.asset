@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 3
   tags:
   - EnergyKey
+  - EnergySocket
+  - RedKey
+  - EnergyCube
+  - Star
   layers:
   - Default
   - TransparentFX
@@ -12,7 +16,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - EnergyKey
   - 
   - 
   - 

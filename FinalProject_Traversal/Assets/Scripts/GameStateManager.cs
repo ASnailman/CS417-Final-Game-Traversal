@@ -18,6 +18,10 @@ public class GameStateManager : MonoBehaviour
     public LeverState[] leverStates;
     public int Energy = 0;
     public int maxEnergy = 5;
+
+    public int StarsCollected = 0;
+    public int maxStars = 3;
+    public TextMeshProUGUI starsUIText; // Reference to the UI text element to display stars collected to the player
     public TextMeshProUGUI energyUIText; // Reference to the UI text element to display energy to the player
 
     void Start()
@@ -111,6 +115,10 @@ public class GameStateManager : MonoBehaviour
         {
             energyUIText.text = "Energy: " + Energy + "/" + maxEnergy;
         }
+        if (starsUIText != null)
+        {
+            starsUIText.text = "Stars: " + StarsCollected + "/" + maxStars;
+        }
     }
 
     void SetLeverState(string leverID, int newState)
@@ -167,5 +175,29 @@ public class GameStateManager : MonoBehaviour
                 Debug.LogWarning("GameStateManager: RespawnPointBehavior component not found on respawn point " + respawnPoints[i].name);
             }
         }
+    }
+    public GameObject GetRespawnPoint(int respawnPointID)
+    {
+        if (respawnPointID < 0 || respawnPointID >= respawnPoints.Length)
+        {
+            Debug.LogWarning("GameStateManager: Invalid respawn point ID " + respawnPointID);
+            return null;
+        }
+        for (int i = 0; i < respawnPoints.Length; i++)
+        {
+            var respawnBehavior = respawnPoints[i].GetComponent<RespawnPointBehavior>();
+            if (respawnBehavior != null)
+            {
+                if (respawnBehavior.respawnPointID == respawnPointID)
+                {
+                    return respawnPoints[i];
+                }
+            }
+            else
+            {
+                Debug.LogWarning("GameStateManager: RespawnPointBehavior component not found on respawn point " + respawnPoints[i].name);
+            }
+        }
+        return null;
     }
 }
