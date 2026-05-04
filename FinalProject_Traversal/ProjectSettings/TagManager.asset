@@ -9,6 +9,7 @@ TagManager:
   - RedKey
   - EnergyCube
   - Star
+  - Lore
   layers:
   - Default
   - TransparentFX

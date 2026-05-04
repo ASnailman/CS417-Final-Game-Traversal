@@ -23,6 +23,13 @@ public class GameStateManager : MonoBehaviour
     public int maxStars = 3;
     public TextMeshProUGUI starsUIText; // Reference to the UI text element to display stars collected to the player
     public TextMeshProUGUI energyUIText; // Reference to the UI text element to display energy to the player
+    public TextMeshProUGUI loreUIText;
+    public int currentScore = 0;
+    public TMPro.TextMeshProUGUI scoreUIText;
+
+    public float lossTimer = 300f; // 5 minutes to escape
+    public TextMeshProUGUI timerUIText; 
+    private bool gameLost = false;
 
     void Start()
     {
@@ -80,6 +87,23 @@ public class GameStateManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (scoreUIText != null) scoreUIText.text = "Score: " + currentScore;
+        if (!gameLost)
+        {
+            lossTimer -= Time.deltaTime;
+            if (timerUIText != null)
+            {
+                int minutes = Mathf.FloorToInt(lossTimer / 60F);
+                int seconds = Mathf.FloorToInt(lossTimer - minutes * 60);
+                timerUIText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+            }
+            if (lossTimer <= 0)
+            {
+                gameLost = true;
+                if (timerUIText != null) timerUIText.text = "00:00 - YOU LOSE";
+            }
+        }
+
         for (int i=0; i < doors.Length; i++)
         {
             var door = doors[i];
@@ -199,5 +223,18 @@ public class GameStateManager : MonoBehaviour
             }
         }
         return null;
+    }
+
+    public void DisplayLore(string loreText)
+    {
+        if (loreUIText != null)
+        {
+            loreUIText.text = loreText;
+            Invoke("ClearLore", 6f); // Clears after 6 seconds
+        }
+    }
+    private void ClearLore() 
+    { 
+        if (loreUIText != null) loreUIText.text = ""; 
     }
 }

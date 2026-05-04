@@ -7,6 +7,7 @@ public class CasualCollectibleBehavior : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public bool isCollected = false;
     public GameObject selfObject;
+    public string loreMessage;
     void Start()
     {
         UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable grabInteractable = GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable>();
@@ -41,10 +42,16 @@ public class CasualCollectibleBehavior : MonoBehaviour
         if (selfObject.CompareTag("Star"))
         {
             GameStateManager.Instance.StarsCollected++;
+            GameStateManager.Instance.currentScore += 500;
         }
         else if (selfObject.CompareTag("EnergyCube"))
         {
             GameStateManager.Instance.Energy++;
+            GameStateManager.Instance.currentScore += 500;
+        }
+        else if (selfObject.CompareTag("Lore"))
+        {
+            GameStateManager.Instance.DisplayLore(loreMessage);
         }
         else
         {

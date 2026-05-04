@@ -27,6 +27,13 @@ public class SwitchPokeRotator : MonoBehaviour
     [Tooltip("Time in seconds to animate the flick.")]
     public float animationDuration = 0.12f;
 
+    public Material onMaterial;
+    public Material offMaterial;
+    public Renderer indicatorLight;
+    public GameObject toyToDropPrefab;
+    public Transform dropLocation;
+    private bool toyDropped = false;
+
     readonly List<UnityEngine.XR.Interaction.Toolkit.Interactables.XRSimpleInteractable> m_Interactables = new List<UnityEngine.XR.Interaction.Toolkit.Interactables.XRSimpleInteractable>();
 
     bool m_IsOn = false;
@@ -181,6 +188,16 @@ public class SwitchPokeRotator : MonoBehaviour
         {
             gameStateManager.UpdateLeverState(leverID, m_IsOn ? 1 : 0);
             Debug.Log("SwitchPokeRotator: Updated GameStateManager with leverID " + leverID + " state " + (m_IsOn ? 1 : 0));
+        }
+
+        if (indicatorLight != null)
+        {
+            indicatorLight.material = m_IsOn ? onMaterial : offMaterial;
+        }
+        if (m_IsOn && !toyDropped && toyToDropPrefab != null && dropLocation != null)
+        {
+            Instantiate(toyToDropPrefab, dropLocation.position, dropLocation.rotation);
+            toyDropped = true;
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Locomotion.Movement;
 using Unity.XR.CoreUtils;
+using UnityEngine.Events;
 
 public class PortalBehavior : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class PortalBehavior : MonoBehaviour
 
     public Camera portalCamera; // Camera at the destination
     public Renderer portalScreen; // Screen to display the portal view
+    public UnityEvent onPortalEntered;
 
     private void Start()
     {
@@ -63,6 +65,7 @@ public class PortalBehavior : MonoBehaviour
         moveProvider = rigTransform.GetComponentInChildren<ContinuousMoveProvider>(true);
 
         Debug.Log($"Player entered portal. Rig '{rigTransform.name}', Move provider found: {moveProvider != null}");
+        onPortalEntered?.Invoke();
         StartCoroutine(TeleportPlayer(characterController, headTransform));
     }
 
