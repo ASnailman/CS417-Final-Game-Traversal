@@ -37,8 +37,14 @@ public class CasualCollectibleBehavior : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
+        if (!other.CompareTag("Player") && !other.CompareTag("MainCamera") && other.gameObject != gameObject)
+        {
+            return; // Ignore the collision if it's just the floor or a wall
+        }
+
         Debug.Log("CasualCollectibleBehavior: OnTriggerEnter called for " + gameObject.name + " with collider " + other.name);
         isCollected = true; // Mark the collectible as collected
+        
         if (selfObject.CompareTag("Star"))
         {
             GameStateManager.Instance.StarsCollected++;

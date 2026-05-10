@@ -143,6 +143,10 @@ public class GameStateManager : MonoBehaviour
         {
             starsUIText.text = "Stars: " + StarsCollected + "/" + maxStars;
         }
+        if (scoreUIText != null)
+        {
+            scoreUIText.text = "Score: " + currentScore;
+        }
     }
 
     void SetLeverState(string leverID, int newState)
